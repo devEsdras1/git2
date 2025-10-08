@@ -65,10 +65,58 @@ export default function Login() {
     setError(null);
   };
 
+<<<<<<< HEAD
   if (usuario) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Hola, {usuario.nombre}</Text>
+=======
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      {usuario ? (
+        <>
+          <Text style={styles.title}>Hola, {usuario.nombre}</Text>
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
+            <Text style={styles.buttonText}>Cerrar Sesión</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <Text style={styles.title}>Login</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Correo"
+            placeholderTextColor="#999"
+            value={correo}
+            onChangeText={setCorreo}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Contraseña"
+            placeholderTextColor="#999"
+            secureTextEntry
+            value={contrasena}
+            onChangeText={setContrasena}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleLogin}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Iniciar Sesión</Text>
+            )}
+          </TouchableOpacity>
+        </>
+      )}
+>>>>>>> 292151d (Actualizacion del Fondo)
 
         <TouchableOpacity style={styles.button} onPress={() => router.push('/usuario')}>
           <Text style={styles.buttonText}>Usuarios</Text>
@@ -122,10 +170,52 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
+<<<<<<< HEAD
   container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
   input: { borderWidth: 1, borderColor: "#ccc", marginBottom: 15, padding: 10, borderRadius: 5 },
   button: { backgroundColor: "#007BFF", padding: 15, borderRadius: 5, alignItems: "center", marginVertical: 5 },
   buttonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
   errorText: { color: "red", marginBottom: 10, textAlign: "center" },
+=======
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#fff", // fondo blanco forzado
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#000", // texto negro
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "#fff", // fondo blanco
+    color: "#000", // texto negro
+  },
+  button: {
+    backgroundColor: "#007BFF",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  mensaje: {
+    marginTop: 20,
+    textAlign: "center",
+    fontSize: 16,
+    color: "#000", // texto negro
+  },
+>>>>>>> 292151d (Actualizacion del Fondo)
 });
