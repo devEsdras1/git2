@@ -1,4 +1,3 @@
-// src/services/auth.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const USER_KEY = "usuario_logueado";
