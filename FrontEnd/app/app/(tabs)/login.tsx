@@ -132,6 +132,7 @@ export default function Login() {
           <TextInput
             style={styles.input}
             placeholder="Correo"
+            placeholderTextColor="#999"
             value={correo}
             onChangeText={setCorreo}
             keyboardType="email-address"
@@ -140,6 +141,7 @@ export default function Login() {
           <TextInput
             style={styles.input}
             placeholder="Contraseña"
+            placeholderTextColor="#999"
             secureTextEntry
             value={contrasena}
             onChangeText={setContrasena}
@@ -155,19 +157,10 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-<<<<<<< Updated upstream
-  container: { flex: 1, justifyContent: "center", padding: 20 },
-  title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
-  input: { borderWidth: 1, marginBottom: 15, padding: 10, borderRadius: 5 },
-  button: { backgroundColor: "#007BFF", padding: 15, borderRadius: 5, alignItems: "center" },
-  buttonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  mensaje: { marginTop: 20, textAlign: "center", fontSize: 16 },
-=======
   container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center", color: "#000" },
   input: { borderWidth: 1, borderColor: "#ccc", marginBottom: 15, padding: 10, borderRadius: 5, backgroundColor: "#fff", color: "#000" },
   button: { backgroundColor: "#007BFF", padding: 15, borderRadius: 5, alignItems: "center" },
   buttonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
   mensaje: { marginTop: 20, textAlign: "center", fontSize: 16, color: "#000" },
->>>>>>> Stashed changes
 });
