@@ -1,3 +1,4 @@
+//backend/api.ts
 const BASE_URL = "https://teresa-unspeculative-nondeviously.ngrok-free.dev";
 
 interface LoginResponse {
@@ -26,39 +27,7 @@ export const loginUser = async (correo: string, contrasena: string): Promise<Log
   }
 };
 
-// GET tablas
-export const getUsuarios = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/usuarios`, {
-      headers: { "ngrok-skip-browser-warning": "true" },
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Error obteniendo usuarios:", error);
-    return [];
-  }
-};
 
-export const getEstados = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/estados`, {
-      headers: { "ngrok-skip-browser-warning": "true" },
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Error obteniendo estados:", error);
-    return [];
-  }
-};
 
-export const getPedidos = async () => {
-  try {
-    const response = await fetch(`${BASE_URL}/pedidos`, {
-      headers: { "ngrok-skip-browser-warning": "true" },
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Error obteniendo pedidos:", error);
-    return [];
-  }
-};
+
+
