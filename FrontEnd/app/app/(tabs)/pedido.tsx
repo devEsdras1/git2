@@ -1,4 +1,4 @@
-// app/(tabs)/pedidos.tsx
+//app/(tabs)/pedidos.tsx
 import React, { useEffect, useState } from "react";
 import {
   View,
