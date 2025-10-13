@@ -205,3 +205,20 @@ app.delete("/estados/:id", (req, res) => {
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Servidor corriendo en http://0.0.0.0:${PORT}`);
 });
+// === NUEVA RUTA PARA OBTENER TODAS LAS TABLAS ===
+app.get('/tablas', async (req, res) => {
+  try {
+    const [usuarios] = await db.query('SELECT * FROM usuarios');
+    const [pedidos] = await db.query('SELECT * FROM pedidos');
+    const [estados_pedido] = await db.query('SELECT * FROM estados_pedido');
+    
+    res.json({
+      usuarios,
+      pedidos,
+      estados_pedido
+    });
+  } catch (error) {
+    console.error('Error al obtener las tablas:', error);
+    res.status(500).json({ error: 'Error al obtener las tablas' });
+  }
+});
