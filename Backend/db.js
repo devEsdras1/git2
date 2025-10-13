@@ -1,3 +1,5 @@
+//backend/db.js
+
 const mysql = require("mysql2");
 
 // 🔹 Configuración de la conexión
