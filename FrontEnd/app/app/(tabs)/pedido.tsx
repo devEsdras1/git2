@@ -1,4 +1,4 @@
-//app/(tabs)/pedidos.tsx
+// app/(tabs)/pedidos.tsx
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -11,8 +11,16 @@ import {
   Modal,
   Platform,
   ScrollView,
+  Dimensions,
 } from "react-native";
-import { obtenerPedidos, agregarPedido, editarPedido, eliminarPedido } from "../../src/services/serPed";
+import {
+  obtenerPedidos,
+  agregarPedido,
+  editarPedido,
+  eliminarPedido,
+} from "../../src/services/serPed";
+
+const { width: screenWidth } = Dimensions.get("window");
 
 const PedidosScreen = () => {
   const [pedidos, setPedidos] = useState<any[]>([]);
@@ -26,10 +34,13 @@ const PedidosScreen = () => {
   const cargarPedidos = async () => {
     try {
       const data = await obtenerPedidos();
-      setPedidos(data.filter((p) => p && (p.descripcion || p.id_usuario || p.id_estado)));
+      setPedidos(
+        data.filter((p) => p && (p.descripcion || p.id_usuario || p.id_estado))
+      );
     } catch (error) {
       console.error(error);
-      if (Platform.OS === "web") alert("No se pudieron cargar los pedidos");
+      if (Platform.OS === "web")
+        alert("No se pudieron cargar los pedidos");
       else Alert.alert("Error", "No se pudieron cargar los pedidos");
     }
   };
@@ -118,13 +129,21 @@ const PedidosScreen = () => {
   const renderItem = ({ item }: { item: any }) => (
     <View style={styles.fila}>
       <Text style={[styles.texto, styles.colUsuario]}>{item.id_usuario}</Text>
-      <Text style={[styles.texto, styles.colDescripcion]}>{item.descripcion}</Text>
+      <Text style={[styles.texto, styles.colDescripcion]}>
+        {item.descripcion}
+      </Text>
       <Text style={[styles.texto, styles.colEstado]}>{item.id_estado}</Text>
       <View style={[styles.botones, styles.colAcciones]}>
-        <TouchableOpacity style={styles.botonEditar} onPress={() => abrirEditar(item)}>
+        <TouchableOpacity
+          style={styles.botonEditar}
+          onPress={() => abrirEditar(item)}
+        >
           <Text style={styles.botonTexto}>Editar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botonEliminar} onPress={() => handleEliminar(item.id_pedido)}>
+        <TouchableOpacity
+          style={styles.botonEliminar}
+          onPress={() => handleEliminar(item.id_pedido)}
+        >
           <Text style={styles.botonTexto}>Eliminar</Text>
         </TouchableOpacity>
       </View>
@@ -140,28 +159,44 @@ const PedidosScreen = () => {
       {pedidos.length === 0 ? (
         <Text style={styles.mensaje}>No hay pedidos registrados.</Text>
       ) : (
-        <View style={{ flex: 1 }}>
-          {/* Encabezados */}
-          <View style={styles.encabezado}>
-            <Text style={[styles.textoEncabezado, styles.colUsuario]}>Usuario</Text>
-            <Text style={[styles.textoEncabezado, styles.colDescripcion]}>Descripción</Text>
-            <Text style={[styles.textoEncabezado, styles.colEstado]}>Estado</Text>
-            <Text style={[styles.textoEncabezado, styles.colAcciones]}>Acciones</Text>
-          </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={true}
+          contentContainerStyle={{ minWidth: screenWidth }}
+        >
+          <View style={{ width: screenWidth * 1.2 }}>
+            {/* Encabezados */}
+            <View style={styles.encabezado}>
+              <Text style={[styles.textoEncabezado, styles.colUsuario]}>
+                Usuario
+              </Text>
+              <Text style={[styles.textoEncabezado, styles.colDescripcion]}>
+                Descripción
+              </Text>
+              <Text style={[styles.textoEncabezado, styles.colEstado]}>
+                Estado
+              </Text>
+              <Text style={[styles.textoEncabezado, styles.colAcciones]}>
+                Acciones
+              </Text>
+            </View>
 
-          <FlatList
-            data={pedidos}
-            keyExtractor={(item) => item.id_pedido.toString()}
-            renderItem={renderItem}
-          />
-        </View>
+            <FlatList
+              data={pedidos}
+              keyExtractor={(item) => item.id_pedido.toString()}
+              renderItem={renderItem}
+            />
+          </View>
+        </ScrollView>
       )}
 
       {/* Modal Agregar / Editar */}
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalFondo}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitulo}>{editandoId === null ? "Agregar Pedido" : "Editar Pedido"}</Text>
+            <Text style={styles.modalTitulo}>
+              {editandoId === null ? "Agregar Pedido" : "Editar Pedido"}
+            </Text>
             <TextInput
               placeholder="ID Usuario"
               style={styles.input}
@@ -183,10 +218,16 @@ const PedidosScreen = () => {
               keyboardType="numeric"
             />
             <View style={styles.modalBotones}>
-              <TouchableOpacity style={styles.botonGuardar} onPress={guardarPedido}>
+              <TouchableOpacity
+                style={styles.botonGuardar}
+                onPress={guardarPedido}
+              >
                 <Text style={styles.botonTexto}>Guardar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.botonCancelar} onPress={() => setModalVisible(false)}>
+              <TouchableOpacity
+                style={styles.botonCancelar}
+                onPress={() => setModalVisible(false)}
+              >
                 <Text style={styles.botonTexto}>Cancelar</Text>
               </TouchableOpacity>
             </View>
@@ -220,18 +261,59 @@ const styles = StyleSheet.create({
   colEstado: { flex: 1, paddingHorizontal: 5, textAlign: "center" },
   colAcciones: { flex: 2, flexDirection: "row", justifyContent: "center" },
   textoEncabezado: { fontWeight: "bold", fontSize: 16, textAlign: "center" },
-  texto: { fontSize: 16 },
+  texto: { fontSize: 16, textAlign: "center" },
   botones: { flexDirection: "row" },
-  botonAgregar: { backgroundColor: "#4CAF50", padding: 10, marginBottom: 10, borderRadius: 5, alignItems: "center" },
-  botonEditar: { backgroundColor: "#2196F3", padding: 8, borderRadius: 5, marginRight: 5 },
+  botonAgregar: {
+    backgroundColor: "#4CAF50",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  botonEditar: {
+    backgroundColor: "#2196F3",
+    padding: 8,
+    borderRadius: 5,
+    marginRight: 5,
+  },
   botonEliminar: { backgroundColor: "#f44336", padding: 8, borderRadius: 5 },
   botonTexto: { color: "#fff", fontWeight: "bold" },
   mensaje: { textAlign: "center", marginTop: 20, fontSize: 16 },
-  modalFondo: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center" },
-  modalContainer: { backgroundColor: "#fff", padding: 20, borderRadius: 10, width: "90%" },
+  modalFondo: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    width: "90%",
+  },
   modalTitulo: { fontSize: 18, fontWeight: "bold", marginBottom: 10 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 8, marginBottom: 10, borderRadius: 5 },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 8,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
   modalBotones: { flexDirection: "row", justifyContent: "space-between" },
-  botonGuardar: { backgroundColor: "#4CAF50", padding: 10, borderRadius: 5, flex: 1, marginRight: 5, alignItems: "center" },
-  botonCancelar: { backgroundColor: "#f44336", padding: 10, borderRadius: 5, flex: 1, marginLeft: 5, alignItems: "center" },
+  botonGuardar: {
+    backgroundColor: "#4CAF50",
+    padding: 10,
+    borderRadius: 5,
+    flex: 1,
+    marginRight: 5,
+    alignItems: "center",
+  },
+  botonCancelar: {
+    backgroundColor: "#f44336",
+    padding: 10,
+    borderRadius: 5,
+    flex: 1,
+    marginLeft: 5,
+    alignItems: "center",
+  },
 });
