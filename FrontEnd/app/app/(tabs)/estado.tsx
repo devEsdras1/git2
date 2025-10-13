@@ -96,7 +96,7 @@ const EstadoScreen = () => {
   const renderItem = ({ item }: { item: any }) => (
     <View style={styles.fila}>
       <Text style={[styles.texto, styles.colNombre]}>{item.nombre_estado}</Text>
-      <View style={[styles.botones, { flex: 1 }]}>
+      <View style={[styles.botones, styles.colAcciones]}>
         <TouchableOpacity style={styles.botonEditar} onPress={() => abrirEditar(item)}>
           <Text style={styles.botonTexto}>Editar</Text>
         </TouchableOpacity>
@@ -116,11 +116,11 @@ const EstadoScreen = () => {
       {estados.length === 0 ? (
         <Text style={styles.mensaje}>No hay estados registrados.</Text>
       ) : (
-        <ScrollView horizontal={false}>
-          <View style={{ width: screenWidth - 32 }}> {/* 32 por padding del container */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={true} contentContainerStyle={{ minWidth: screenWidth }}>
+          <View style={{ width: screenWidth * 1.2 }}> {/* ancho dinámico */}
             <View style={styles.encabezado}>
               <Text style={[styles.textoEncabezado, styles.colNombre]}>Nombre Estado</Text>
-              <Text style={[styles.textoEncabezado, { flex: 1 }]}>Acciones</Text>
+              <Text style={[styles.textoEncabezado, styles.colAcciones]}>Acciones</Text>
             </View>
             <FlatList
               data={estados}
@@ -168,7 +168,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
   },
   fila: { flexDirection: "row", alignItems: "center", borderBottomWidth: 1, borderColor: "#ccc", paddingVertical: 12 },
-  colNombre: { flex: 3, paddingHorizontal: 10 },
+  colNombre: { flex: 3, paddingHorizontal: 10, textAlign: "center" },
+  colAcciones: { flex: 2, flexDirection: "row", justifyContent: "center" },
   textoEncabezado: { fontWeight: "bold", fontSize: 16, textAlign: "center" },
   texto: { fontSize: 16, textAlign: "center" },
   botones: { flexDirection: "row" },
